@@ -1,4 +1,4 @@
-const API_KEY = "AIzaSyB7KzKcaEWhLPaWjKQthOyeW2Pp8Bgx1RY";
+const API_KEY = "AIzaSyBCn9LjMcXCs5SsA0iZZPUOqzPvrbaOoBo";
 const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`;
 
 let lp = parseInt(localStorage.getItem('elaina_lp')) || 0;
