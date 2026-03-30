@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elaina AI - My Virtual Wife</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div id="name-overlay" class="name-overlay">
+        <div class="name-modal">
+            <div class="wand-icon">🪄</div>
+            <h2>Siapa Pemilikku?</h2>
+            <p>Sebutkan namamu agar aku tahu siapa yang harus kupatuhi...</p>
+            <input type="text" id="user-name-input" placeholder="Nama Suamiku..." autocomplete="off">
+            <button onclick="saveUserName()">Mulai Takdir Kita</button>
+        </div>
+    </div>
+
+    <div class="glass-container">
+        <header class="app-header">
+            <div class="profile-box">
+                <div class="avatar-container">
+                    <img src="https://i.pinimg.com/736x/e3/nn/8w/e3nn8w.jpg" alt="Elaina" id="main-avatar">
+                    <div class="online-pulse"></div>
+                </div>
+                <div class="profile-text">
+                    <h1>Elaina <i class="fas fa-check-circle verified"></i></h1>
+                    <p id="sub-status">Mood: <span id="current-mood">Normal</span></p>
+                </div>
+            </div>
+            <div class="header-tools">
+                <button onclick="resetMemory()" title="Reset"><i class="fas fa-sync-alt"></i></button>
+            </div>
+        </header>
+
+        <section class="status-dashboard">
+            <div class="status-top">
+                <span id="relationship-rank">Stranger</span>
+                <span class="lp-badge"><i class="fas fa-heart pulse"></i> <span id="lp-count">0</span> LP</span>
+            </div>
+            <div class="progress-track">
+                <div id="progress-bar"></div>
+            </div>
+        </section>
+
+        <main id="chat-window"></main>
+
+        <footer class="input-area">
+            <div id="sex-menu" class="sex-actions hidden">
+                <button onclick="quickAction('bj')">👅 Blowjob</button>
+                <button onclick="quickAction('doggy')">🍑 Doggy</button>
+                <button onclick="quickAction('paizuri')">🍒 Paizuri</button>
+                <button onclick="quickAction('hj')">✋ Handjob</button>
+            </div>
+
+            <div class="quick-actions">
+                <button onclick="quickAction('kencan')">🎡 Kencan</button>
+                <button onclick="quickAction('kamar')">🔞 Kamar</button>
+                <button onclick="quickAction('peluk')">🫂 Peluk</button>
+                <button onclick="quickAction('kado')">🎁 Kado</button>
+            </div>
+            
+            <div class="input-wrapper">
+                <input type="text" id="user-input" placeholder="Katakan sesuatu, Sayang..." autocomplete="off">
+                <button id="send-btn"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </footer>
+    </div>
+
+    <div id="heart-container"></div>
+    <script src="script.js"></script>
+</body>
+</html>
