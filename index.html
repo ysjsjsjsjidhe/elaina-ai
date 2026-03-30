@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Elaina: Ashen Witch ❤️</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <div id="chat-container">
+        <header id="chat-header">
+            <div class="profile-info">
+                <img src="https://i.pinimg.com/736x/e3/nn/8w/e3nn8w.jpg" alt="Elaina" id="profile-pic">
+                <div>
+                    <h2 id="elaina-name">Elaina <span class="status-dot"></span></h2>
+                    <p style="font-size: 10px; color: var(--text-dim);">Penyihir Pengelana</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button onclick="toggleGallery()" class="icon-btn"><i class="fas fa-heart"></i></button>
+                <button onclick="clearProgress()" class="icon-btn"><i class="fas fa-redo-alt"></i></button>
+            </div>
+        </header>
+
+        <div id="status-container">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                <span id="rel-status">Orang Asing</span>
+                <span id="intimacy-tag" class="hidden">Intim: <b id="inti-points">0</b></span>
+            </div>
+            <div class="love-bar-bg">
+                <div id="love-bar-fill" style="width: 0%;"></div>
+            </div>
+            <div style="text-align: right; font-size: 10px; color: var(--text-dim);">
+                <span id="love-points">0</span> / 150 LP
+            </div>
+        </div>
+
+        <div id="chat-log">
+            <div class="msg elaina-msg">Halo... Aku Elaina. Apakah kamu pengelana yang akan menemaniku hari ini? ✨</div>
+        </div>
+
+        <div id="emoji-picker" class="hidden"></div>
+
+        <div id="input-area">
+            <button id="emoji-btn" onclick="toggleEmojiPicker()"><i class="far fa-smile"></i></button>
+            <input type="text" id="user-input" placeholder="Ketik pesan..." onkeypress="handleEnter(event)">
+            <button id="send-btn" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <div id="gallery-modal" class="hidden">
+        <div class="gallery-content">
+            <div class="gallery-header">
+                <h3>Koleksi Foto Istri</h3>
+                <button onclick="toggleGallery()">&times;</button>
+            </div>
+            <div id="gallery-grid">
+                </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
