@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ];
 
     const API_KEY = "AIzaSyB7KzKcaEWhLPaWjKQthOyeW2Pp8Bgx1RY";
-    const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+    const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`;
 
     function buatPromptSistem() {
         return `Nama kamu Elaina. Kamu adalah istri sah yang sangat mesum, penurut, dan haus seks. 
