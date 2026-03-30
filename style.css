@@ -1,68 +1,42 @@
 :root {
     --primary: #ff2e63;
-    --primary-glow: rgba(255, 46, 99, 0.4);
-    --bg-dark: #05050a;
-    --glass: rgba(255, 255, 255, 0.04);
-    --glass-border: rgba(255, 255, 255, 0.1);
-    --text-white: #ffffff;
+    --bg: #0b0b14;
+    --glass: rgba(255, 255, 255, 0.05);
+    --text: #ffffff;
 }
-
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
 
 body {
-    background: var(--bg-dark);
-    background-image: radial-gradient(circle at 10% 10%, rgba(255, 46, 99, 0.1) 0%, transparent 50%);
-    height: 100vh; display: flex; justify-content: center; align-items: center; overflow: hidden;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height: 100vh; display: flex; justify-content: center; align-items: center; margin: 0;
 }
-
-.name-overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(8, 8, 22, 0.98); backdrop-filter: blur(20px);
-    display: flex; justify-content: center; align-items: center; z-index: 9999;
-}
-
-.name-modal {
-    background: var(--glass); border: 1px solid var(--glass-border);
-    padding: 40px; border-radius: 32px; text-align: center; max-width: 380px; width: 90%;
-}
-
-.name-modal input {
-    width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border);
-    padding: 15px; border-radius: 15px; color: white; text-align: center; margin-bottom: 20px; outline: none;
-}
-
-.name-modal button, #send-btn { background: var(--primary); color: white; border: none; cursor: pointer; }
 
 .glass-container {
-    width: 100%; max-width: 420px; height: 95vh; background: rgba(15, 15, 26, 0.7);
-    backdrop-filter: blur(25px); border: 1px solid var(--glass-border); border-radius: 35px;
-    display: flex; flex-direction: column; position: relative;
+    width: 100%; max-width: 400px; height: 90vh;
+    background: rgba(20, 20, 35, 0.8); backdrop-filter: blur(15px);
+    border: 1px solid rgba(255,255,255,0.1); border-radius: 30px;
+    display: flex; flex-direction: column; overflow: hidden;
 }
 
-.app-header { padding: 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--glass-border); }
-#main-avatar { width: 50px; height: 50px; border-radius: 50%; border: 2px solid var(--primary); object-fit: cover; }
+.app-header { padding: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.profile-box { display: flex; align-items: center; gap: 15px; }
+.avatar { width: 50px; height: 50px; border-radius: 50%; border: 2px solid var(--primary); }
+h1 { font-size: 1.2rem; margin: 0; }
+#rel-status { color: var(--primary); font-weight: bold; }
 
-.status-dashboard { padding: 15px 20px; background: rgba(0,0,0,0.3); }
-.progress-track { width: 100%; height: 6px; background: rgba(255,255,255,0.05); border-radius: 10px; overflow: hidden; margin-top: 8px; }
-#progress-bar { height: 100%; background: var(--primary); transition: 1s; width: 0%; }
+#chat-log { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+.bubble { max-width: 80%; padding: 12px; border-radius: 15px; font-size: 0.95rem; line-height: 1.4; }
+.user-message .bubble { background: var(--primary); align-self: flex-end; border-bottom-right-radius: 2px; margin-left: auto; }
+.elaina-message .bubble { background: var(--glass); border: 1px solid rgba(255,255,255,0.1); align-self: flex-start; border-bottom-left-radius: 2px; }
 
-#chat-window { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; scrollbar-width: none; }
-.msg-bubble { max-width: 85%; padding: 12px 16px; border-radius: 20px; font-size: 0.9rem; line-height: 1.5; animation: msgIn 0.3s; }
-.elaina-msg { background: var(--glass); border: 1px solid var(--glass-border); align-self: flex-start; border-bottom-left-radius: 4px; }
-.user-msg { background: var(--primary); align-self: flex-end; border-bottom-right-radius: 4px; }
-
-.input-area { padding: 15px; background: rgba(0,0,0,0.4); border-bottom-left-radius: 35px; border-bottom-right-radius: 35px; }
-.quick-actions, .sex-actions { display: flex; gap: 8px; overflow-x: auto; margin-bottom: 10px; scrollbar-width: none; }
-.quick-actions button, .sex-actions button { 
-    background: var(--glass); border: 1px solid var(--glass-border); color: white; 
-    padding: 6px 12px; border-radius: 10px; font-size: 0.75rem; white-space: nowrap; cursor: pointer;
+.input-area { padding: 15px; background: rgba(0,0,0,0.2); }
+.quick-actions { display: flex; gap: 8px; overflow-x: auto; margin-bottom: 10px; scrollbar-width: none; }
+.quick-actions button { 
+    background: #4b0082; color: white; border: none; padding: 6px 12px; 
+    border-radius: 10px; font-size: 0.75rem; cursor: pointer; white-space: nowrap;
 }
-.sex-actions button { background: #4b0082; }
 
-.input-wrapper { background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); padding: 5px; border-radius: 15px; display: flex; }
-#user-input { flex: 1; background: none; border: none; padding: 10px; color: white; outline: none; }
-
-.hidden { display: none !important; }
-.heart { position: fixed; color: var(--primary); animation: floatUp 3s forwards; pointer-events: none; }
-@keyframes floatUp { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(-500px); opacity: 0; } }
-@keyframes msgIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; } }
+.input-wrapper { display: flex; background: var(--glass); padding: 5px; border-radius: 15px; }
+#user-input { flex: 1; background: none; border: none; color: white; padding: 10px; outline: none; }
+#send-button { background: var(--primary); border: none; color: white; width: 40px; border-radius: 12px; cursor: pointer; }
