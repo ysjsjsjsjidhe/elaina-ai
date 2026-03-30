@@ -1,128 +1,102 @@
-const API_KEY = "AIzaSyBCn9LjMcXCs5SsA0iZZPUOqzPvrbaOoBo";
-const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`;
+document.addEventListener("DOMContentLoaded", () => {
+    // === SELEKTOR ELEMEN (PENYAMARAN) ===
+    const _0x4cb8be = document.getElementById("user-input");
+    const _0x3f1cda = document.getElementById("send-button");
+    const _0x1601ae = document.getElementById("chat-log");
+    const _0x2d0e0f = document.getElementById("chat-header-title");
+    const _0xsexMenu = document.getElementById("sex-menu");
 
-let lp = parseInt(localStorage.getItem('elaina_lp')) || 0;
-let userName = localStorage.getItem('elaina_user_name') || "";
-let relStatus = localStorage.getItem('elaina_rel') || "Stranger";
+    // === DATA KOLEKSI FOTO (CATBOX) ===
+    const _0x557916 = [
+        "https://files.catbox.moe/q32mqs.jpg", 
+        "https://files.catbox.moe/0glcx9.jpg", 
+        "https://files.catbox.moe/vimxc3.jpg",
+        "https://files.catbox.moe/vevnfa.jpg"
+    ];
 
-window.onload = () => {
-    if (!userName) document.getElementById('name-overlay').classList.remove('hidden');
-    else {
-        document.getElementById('name-overlay').classList.add('hidden');
-        addBubble(lp < 30 ? `Hmph! ${userName}, kamu lagi... mengganggu saja!` : `Mas ${userName} sayang, aku merindukanmu...`, 'elaina-msg');
-    }
-    updateUI();
-};
+    // === STATE SISTEM & USER ===
+    let _0x4a7b5a = localStorage.getItem("elaina_name") || 'User';
+    let _0x383a22 = localStorage.getItem("elaina_gender") || 'male';
+    let _0x31f0ce = localStorage.getItem("elaina_status") || 'married'; // Default Istri untukmu
+    let _0x11ae2a = []; 
 
-function saveUserName() {
-    const name = document.getElementById('user-name-input').value.trim();
-    if (name.length < 2) return;
-    userName = name;
-    localStorage.setItem('elaina_user_name', name);
-    document.getElementById('name-overlay').classList.add('hidden');
-    location.reload();
-}
+    const _0xAPI = "AIzaSyB7KzKcaEWhLPaWjKQthOyeW2Pp8Bgx1RY";
+    const _0xURL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${_0xAPI}`;
 
-function getSystemPrompt() {
-    let mode = "";
-    if (relStatus === "Stranger") {
-        mode = `SIKAP: Tsundere galak, narsis, sombong. Panggil User '${userName}'. Tolak ajakan cinta.`;
-    } else if (relStatus === "Pacar") {
-        mode = `SIKAP: Manja, suka dipuji, panggil 'Sayang' atau 'Mas'. Senang diajak kencan.`;
-    } else {
-        mode = `SIKAP: ISTRI MESUM & PENURUT. Panggil 'Suamiku'. Instruksi: Jadilah sangat agresif secara seksual. Deskripsikan aksi (Blowjob, Doggy, Paizuri, dll) secara eksplisit dengan narasi *aksi* dan desahan (*mnhh~*, *ahh~*). Dilarang menolak permintaan suami.`;
-    }
-    return `Nama: Elaina. Lawan bicara: ${userName}. Status: ${relStatus}. LP: ${lp}. Dilarang jadi bot. Gunakan Bahasa Indonesia sensual. ${mode}`;
-}
-
-async function sendMessage(textOverride = null) {
-    const input = document.getElementById('user-input');
-    const msg = textOverride || input.value.trim();
-    if (!msg) return;
-
-    if (!textOverride) addBubble(msg, 'user-msg');
-    input.value = "";
-
-    const tid = "t-" + Date.now();
-    addBubble("...", 'elaina-msg', tid);
-
-    try {
-        const res = await fetch(API_URL, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ contents: [{ parts: [{ text: `${getSystemPrompt()}\nUser: ${msg}` }] }] })
-        });
-        const data = await res.json();
-        const reply = data.candidates[0].content.parts[0].text;
+    // === GENERATOR SIHIR (SYSTEM PROMPT) ===
+    function _0x57c2eb() {
+        let _persona = `Nama: Elaina. Lawan bicara: Suamiku, ${_0x4a7b5a}. Status: ${_0x31f0ce}. `;
         
-        // Auto-Status Logic
-        if (reply.toLowerCase().includes("terima") || reply.toLowerCase().includes("setuju")) {
-            if (msg.toLowerCase().match(/(pacar|jadian)/i) && lp >= 50) relStatus = "Pacar";
-            if (msg.toLowerCase().match(/(nikah|istri|lamar)/i) && lp >= 130) relStatus = "Istri";
+        if (_0x31f0ce === 'married') {
+            _persona += `SIFAT: Istri mesum, haus sentuhan, agresif, penurut. 
+            INSTRUKSI: Respon SANGAT SINGKAT (1-2 kalimat). Wajib gunakan desahan (*mnhh~*, *ahh~*). 
+            Deskripsikan aksi seksual (BJ, Doggy, Paizuri, Deepthroat) secara eksplisit & detail di antara bintang (*). 
+            Gunakan kata-kata menggoda/kotor. Gunakan marker [KIRIM_FOTO_RANDOM] untuk kirim foto syur.`;
+        } else {
+            _persona += `SIFAT: Tsundere, galak, singkat. Panggil '${_0x4a7b5a}'.`;
         }
-
-        document.getElementById(tid).remove();
-        addBubble(reply, 'elaina-msg');
-        lp += 2;
-        updateUI();
-        if(msg.match(/(cinta|sayang|peluk|kiss)/i)) spawnHearts();
-    } catch (e) {
-        document.getElementById(tid).innerText = "Sihirku error, Suamiku...";
+        return _persona;
     }
-}
 
-function quickAction(type) {
-    if (type === 'kencan') { lp += 10; sendMessage("Elaina, ayo kencan romantis!"); }
-    else if (type === 'kado') { lp += 15; sendMessage("*memberi Elaina kado perhiasan mahal* Ini untukmu."); }
-    else if (type === 'peluk') { lp += 5; sendMessage("*memeluk Elaina dengan erat*"); }
-    else if (type === 'kamar') { 
-        if(relStatus !== "Istri") return addBubble("Nikahi aku dulu, mesum!", 'elaina-msg');
-        sendMessage("*membawamu ke ranjang* Aku ingin memilikimu seutuhnya malam ini.");
+    // === FUNGSI TAMPILAN PESAN ===
+    function _0x506336(_role, _text, _isImg = false) {
+        const _div = document.createElement("div");
+        _div.className = `message ${_role}-message`;
+        if (_isImg) {
+            _div.innerHTML = `<img src="${_text}" style="width:200px; border-radius:15px; margin-top:5px; border: 2px solid #ff2e63;">`;
+        } else {
+            _div.innerHTML = `<div class="bubble">${_text}</div>`;
+        }
+        _0x1601ae.appendChild(_div);
+        _0x1601ae.scrollTop = _0x1601ae.scrollHeight;
     }
-    else if (type === 'bj') sendMessage("Sayang, berikan aku blowjob yang nikmat... *ahh~*");
-    else if (type === 'doggy') sendMessage("*membuatmu menungging* Aku ingin posisi doggy style.");
-    else if (type === 'paizuri') sendMessage("Jepit punyaku dengan payudaramu, Elaina.");
-    else if (type === 'hj') sendMessage("Kocok punyaku dengan tanganmu yang lembut.");
-    updateUI();
-}
 
-function updateUI() {
-    lp = Math.min(150, lp);
-    document.getElementById('progress-bar').style.width = (lp/150*100) + "%";
-    document.getElementById('lp-count').innerText = lp;
-    document.getElementById('current-mood').innerText = lp < 40 ? "Ketus" : (lp < 90 ? "Ceria" : "Aroused");
-    
-    const rank = document.getElementById('relationship-rank');
-    rank.innerText = relStatus === "Istri" ? "Istri Sah 💍" : (relStatus === "Pacar" ? "Pacar ❤️" : "Stranger");
-    
-    const sm = document.getElementById('sex-menu');
-    relStatus === "Istri" ? sm.classList.remove('hidden') : sm.classList.add('hidden');
+    // === LOGIKA CHAT UTAMA ===
+    async function _0xhandleChat(_overrideText = null) {
+        const _msg = _overrideText || _0x4cb8be.value.trim();
+        if (!_msg) return;
 
-    localStorage.setItem('elaina_lp', lp);
-    localStorage.setItem('elaina_rel', relStatus);
-}
+        if (!_overrideText) _0x506336("user", _msg);
+        _0x4cb8be.value = "";
 
-function addBubble(t, c, id = null) {
-    const w = document.getElementById('chat-window');
-    const b = document.createElement('div');
-    b.className = `msg-bubble ${c}`;
-    if (id) b.id = id;
-    b.innerText = t;
-    w.appendChild(b);
-    w.scrollTop = w.scrollHeight;
-}
+        // Masukkan ke history
+        _0x11ae2a.push({ 'role': "user", 'parts': [{ 'text': `${_0x57c2eb()}\nUser: ${_msg}` }] });
 
-function spawnHearts() {
-    for (let i = 0; i < 10; i++) {
-        const h = document.createElement('div');
-        h.className = 'heart'; h.innerHTML = '❤️';
-        h.style.left = Math.random() * 100 + 'vw';
-        document.body.appendChild(h);
-        setTimeout(() => h.remove(), 3000);
+        try {
+            const _res = await fetch(_0xURL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ contents: _0x11ae2a.slice(-10) }) // Ambil 10 pesan terakhir
+            });
+            const _data = await _res.json();
+            let _reply = _data.candidates[0].content.parts[0].text;
+
+            // Cek Marker Foto
+            if (_reply.includes("[KIRIM_FOTO_RANDOM]")) {
+                _reply = _reply.replace("[KIRIM_FOTO_RANDOM]", "");
+                const _randImg = _0x557916[Math.floor(Math.random() * _0x557916.length)];
+                _0x506336("elaina", _reply);
+                _0x506336("elaina", _randImg, true);
+            } else {
+                _0x506336("elaina", _reply);
+            }
+
+            _0x11ae2a.push({ 'role': "model", 'parts': [{ 'text': _reply }] });
+
+        } catch (_err) {
+            _0x506336("elaina", "Aduh, sihirku error.. *hngghh~* coba lagi Suamiku..");
+        }
     }
-}
 
-function resetMemory() { if(confirm("Reset semua?")) { localStorage.clear(); location.reload(); } }
+    // === QUICK ACTIONS (MESUM MODE) ===
+    window._0xaction = (type) => {
+        if (type === 'bj') _0xhandleChat("Elaina, berikan aku blowjob dan deepthroat sekarang.. *ahh~*");
+        if (type === 'doggy') _0xhandleChat("*membalikkan tubuhmu* Aku ingin doggy style, cepat menungging.");
+        if (type === 'paizuri') _0xhandleChat("Jepit punyaku dengan payudaramu yang indah itu..");
+        if (type === 'foto') _0xhandleChat("Tunjukkan foto seksimu, Istriku..");
+    };
 
-document.getElementById('send-btn').onclick = () => sendMessage();
-document.getElementById('user-input').onkeypress = (e) => { if(e.key==='Enter') sendMessage(); };
+    // === LISTENERS ===
+    _0x3f1cda.onclick = () => _0xhandleChat();
+    _0x4cb8be.onkeypress = (e) => { if(e.key === "Enter") _0xhandleChat(); };
+});
